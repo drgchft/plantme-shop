@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
 
-app_name = 'users'
-
 urlpatterns = [
-    # Пока оставим пустым, позже добавим пути для регистрации и входа
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('profile/', views.UserProfileView.as_view(), name='profile'),
+    path('<str:username>/', views.UserDetailView.as_view(), name='user-detail'),
 ]
