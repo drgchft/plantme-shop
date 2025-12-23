@@ -323,3 +323,70 @@ select.error {
     justify-content: center;
   }
 }
+
+/* Дополнительные стили для форм */
+.input-with-icon {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: var(--space-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-color);
+  z-index: 1;
+}
+
+/* Стили для демо-подсказки */
+.demo-hint {
+  background: #f0f8f4;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-top: var(--space-lg);
+  border-left: 4px solid var(--primary-color);
+}
+
+.demo-hint-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+}
+
+.demo-credentials {
+  font-size: 0.9rem;
+}
+
+/* Стили для успешного сообщения */
+.success-message {
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto var(--space-lg);
+}
+
+/* Адаптивные стили для форм */
+@media (max-width: 480px) {
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  
+  .input-with-icon input {
+    padding-left: calc(var(--space-lg) * 1.5 + 20px);
+  }
+}

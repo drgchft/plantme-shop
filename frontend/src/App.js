@@ -1,8 +1,13 @@
+// App.js должен выглядеть так:
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import './styles/global.css';
+import './styles/components.css';
+import './styles/pages.css';
 import './styles/registration.css';
+import './styles/login.css';
 
 import Main from './pages/Main';
 import Login from './pages/Login';
@@ -68,7 +73,7 @@ function App() {
             } />
             <Route path="/profile/:username" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Profile user={user} />
+                <Profile user={user} onLogout={handleLogout} />
               </ProtectedRoute>
             } />
             <Route path="/profile" element={
@@ -79,6 +84,11 @@ function App() {
             <Route path="/about-us" element={<About />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/card/:id" element={<Card />} />
+            
+            {/* Создайте эти страницы позже */}
+            <Route path="/privacy" element={<div>Политика конфиденциальности</div>} />
+            <Route path="/offer" element={<div>Договор оферты</div>} />
+            <Route path="/agreement" element={<div>Согласие на обработку данных</div>} />
             
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

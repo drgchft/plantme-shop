@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { X } from 'lucide-react';
 import '../styles/components.css';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
@@ -14,13 +15,22 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       <div className="modal">
         <div className="modal-header">
           <h3>{title}</h3>
-          <button className="modal-close" onClick={onClose}>&times;</button>
+          <button 
+            className="modal-close" 
+            onClick={onClose}
+            aria-label="Закрыть"
+          >
+            <X size={24} />
+          </button>
         </div>
         <div className="modal-content">
           {children}
         </div>
         <div className="modal-footer">
-          <button className="btn btn-primary" onClick={onClose}>
+          <button 
+            className="btn btn-primary" 
+            onClick={onClose}
+          >
             Закрыть
           </button>
         </div>

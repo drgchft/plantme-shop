@@ -1,374 +1,633 @@
 .registration-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: #f8f9fa;
+  min-height: calc(100vh - 70px - 300px);
+  padding: var(--space-xl) 0;
+  background: linear-gradient(135deg, #f8fdf9 0%, #e6f7ec 100%);
 }
 
-.registration-form {
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
   width: 100%;
-  max-width: 600px;
+}
+
+/* Информационная панель (сверху) */
+.registration-info {
+  margin-bottom: var(--space-xxl);
+}
+
+.info-card {
   background: white;
-  padding: 40px 35px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.form-title {
+  padding: var(--space-xxl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   text-align: center;
-  margin-bottom: 30px;
-  color: #2c3e50;
 }
 
-.form-title h2 {
-  margin: 0 0 10px 0;
-  font-size: 24px;
+.info-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  color: var(--primary-color);
 }
 
-.form-title p {
-  margin: 0;
-  color: #7f8c8d;
-  font-size: 14px;
+.info-card h2 {
+  font-size: 2rem;
+  color: var(--dark-color);
+  margin-bottom: var(--space-md);
+  font-family: var(--font-heading);
 }
 
-.form-field {
-  margin-bottom: 20px;
+.info-description {
+  color: var(--gray-color);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.form-field label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #2c3e50;
-  font-weight: 500;
+.info-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
 }
 
-.form-field input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.2s;
-}
-
-.form-field input:focus {
-  outline: none;
-  border-color: #2E8B57;
-}
-
-.form-field small {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: #95a5a6;
-}
-
-.form-row {
-  display: flex;
-  gap: 20px;
-}
-
-.form-row .form-field {
-  flex: 1;
-}
-
-/* Область выбора пола - НОВЫЙ СТИЛЬ */
-.gender-section {
-  margin-bottom: 25px;
-}
-
-.gender-label {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #2c3e50;
-  font-weight: 500;
-}
-
-.gender-options-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 5px;
-}
-
-.gender-card {
-  flex: 1;
-  min-width: 150px;
-  padding: 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-  background: #f9f9f9;
-}
-
-.gender-card:hover {
-  border-color: #c0c0c0;
-  background: #f0f0f0;
-}
-
-.gender-card.selected {
-  border-color: #2E8B57;
-  background: #f0f8f4;
-  box-shadow: 0 0 0 1px #2E8B57;
-}
-
-.gender-card-content {
+.feature {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  padding: var(--space-lg);
+  background: #f8f9fa;
+  border-radius: var(--radius-md);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.gender-icon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: #666;
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
 }
 
-.gender-card.selected .gender-icon {
-  color: #2E8B57;
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--primary-color);
 }
 
-.gender-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
+.feature-content {
+  text-align: center;
 }
 
-.gender-card.selected .gender-name {
-  color: #2E8B57;
-  font-weight: 600;
+.feature-content h4 {
+  font-size: 1.2rem;
+  color: var(--dark-color);
+  margin-bottom: var(--space-sm);
 }
 
-/* Поля паролей - улучшенные */
-.password-section {
-  margin-bottom: 25px;
+.feature-content p {
+  color: var(--gray-color);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-.password-field {
-  margin-bottom: 20px;
+/* Форма регистрации (широкая, по центру) */
+.registration-form-wrapper {
+  background: white;
+  padding: var(--space-xxl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.registration-form-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.form-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-lg);
+  color: var(--primary-color);
+}
+
+.form-header h1 {
+  font-size: 2rem;
+  color: var(--dark-color);
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-heading);
+}
+
+.form-subtitle {
+  color: var(--gray-color);
+  font-size: 1rem;
+}
+
+/* Форма */
+.registration-form {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.form-group {
+  margin-bottom: var(--space-lg);
   position: relative;
 }
 
-.password-field label {
+.form-group label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #2c3e50;
+  margin-bottom: var(--space-sm);
   font-weight: 500;
+  color: var(--dark-color);
+  font-size: 0.95rem;
 }
 
-.password-input-wrapper {
+.label-required::after {
+  content: ' *';
+  color: var(--danger-color);
+}
+
+/* Строки формы */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+/* Поля ввода */
+.form-group input {
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  border: 2px solid #e1e5e9;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: all 0.3s;
+  background: #f8f9fa;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+}
+
+.form-group input.error {
+  border-color: var(--danger-color);
+  background: #fff5f5;
+}
+
+.form-group input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Поля с иконками */
+.input-with-icon {
   position: relative;
 }
 
-.password-input-wrapper input {
-  width: 100%;
-  padding: 10px 40px 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.2s;
+.input-with-icon .input-icon {
+  position: absolute;
+  left: var(--space-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-color);
+  z-index: 1;
 }
 
-.password-input-wrapper input:focus {
-  outline: none;
-  border-color: #2E8B57;
+.input-with-icon input {
+  padding-left: calc(var(--space-lg) * 2 + 20px);
+  padding-right: calc(var(--space-lg) + 30px);
 }
 
 .password-toggle {
   position: absolute;
-  right: 10px;
+  right: var(--space-lg);
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
+  color: var(--gray-color);
   cursor: pointer;
-  color: #666;
-  font-size: 18px;
   padding: 0;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .password-toggle:hover {
-  color: #2E8B57;
+  color: var(--primary-color);
 }
 
-.password-strength {
-  margin-top: 8px;
-  font-size: 12px;
+.password-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.password-requirements {
-  margin-top: 15px;
-  padding: 12px;
+/* Подсказки */
+.form-hint {
+  color: var(--gray-color);
+  font-size: 0.85rem;
+  margin-top: var(--space-xs);
+  padding-left: var(--space-sm);
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--danger-color);
+  font-size: 0.85rem;
+  margin-top: var(--space-xs);
+  padding-left: var(--space-sm);
+}
+
+/* Выбор пола - карточный интерфейс */
+.gender-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.gender-option-card {
   background: #f8f9fa;
-  border-radius: 4px;
-  border-left: 3px solid #2E8B57;
+  border: 2px solid #e1e5e9;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  position: relative;
+  user-select: none;
 }
 
-.password-requirements h5 {
-  margin: 0 0 8px 0;
-  font-size: 13px;
-  color: #2c3e50;
+.gender-option-card:hover {
+  border-color: var(--primary-color);
+  background: #f0f8f4;
+  transform: translateY(-2px);
 }
 
-.password-requirements ul {
-  margin: 0;
-  padding-left: 20px;
-  font-size: 12px;
-  color: #666;
+.gender-option-card.selected {
+  border-color: var(--primary-color);
+  background: rgba(46, 139, 87, 0.1);
+  box-shadow: 0 0 0 1px var(--primary-color);
 }
 
-.password-requirements li {
-  margin-bottom: 4px;
+.gender-option-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  position: relative;
 }
 
-.password-requirements li.valid {
-  color: #27ae60;
+.gender-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-xs);
 }
 
-.password-requirements li.valid::before {
-  content: "✓ ";
-  color: #27ae60;
+.gender-label {
+  font-size: 0.95rem;
+  color: var(--dark-color);
+  font-weight: 500;
 }
 
-/* Чекбоксы с выравниванием по левому краю */
-.checkbox-field {
+.gender-check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Поля паролей (один под другим) */
+.password-fields {
+  margin-bottom: var(--space-lg);
+}
+
+.password-fields .form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.password-fields .form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Согласия */
+.agreements-section {
+  margin: var(--space-xl) 0;
+  padding: var(--space-xl);
+  background: #f8f9fa;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary-color);
+}
+
+.agreements-section h3 {
+  font-size: 1.2rem;
+  color: var(--dark-color);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-heading);
+}
+
+.form-checkbox {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 12px;
-  font-size: 14px;
-  text-align: left;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background 0.3s;
 }
 
-.checkbox-field input {
-  margin-top: 3px;
+.form-checkbox:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.form-checkbox.error {
+  background: rgba(220, 53, 69, 0.05);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
   flex-shrink: 0;
 }
 
-.checkbox-field label {
-  margin: 0;
-  line-height: 1.4;
-  text-align: left;
-  flex: 1;
+.form-checkbox input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.checkbox-link {
-  color: #2E8B57;
-  text-decoration: none;
+.form-checkbox label {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--dark-color);
+  cursor: pointer;
+}
+
+.doc-link {
   background: none;
   border: none;
-  padding: 0;
+  color: var(--primary-color);
+  text-decoration: underline;
   cursor: pointer;
+  padding: 0;
   font: inherit;
   display: inline;
 }
 
-.checkbox-link:hover {
-  text-decoration: underline;
+.doc-link:hover:not(:disabled) {
+  color: var(--secondary-color);
 }
 
-.submit-button {
+.doc-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* Кнопка регистрации */
+.btn-register {
   width: 100%;
-  padding: 12px;
-  background: #2E8B57;
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, var(--primary-color), #267a4a);
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: var(--radius-md);
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 25px;
-  transition: background 0.2s;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
 }
 
-.submit-button:hover {
-  background: #267a4a;
+.btn-register:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(46, 139, 87, 0.2);
 }
 
-.submit-button:disabled {
-  opacity: 0.6;
+.btn-register:disabled {
+  opacity: 0.7;
   cursor: not-allowed;
+  transform: none;
 }
 
+.btn-register.loading {
+  color: transparent;
+}
+
+.btn-register.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Ссылка на вход */
 .login-link {
   text-align: center;
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
-  color: #7f8c8d;
-  font-size: 14px;
+  color: var(--gray-color);
+  font-size: 0.95rem;
 }
 
 .login-link a {
-  color: #2E8B57;
-  text-decoration: none;
+  color: var(--primary-color);
   font-weight: 500;
+  text-decoration: none;
+  margin-left: var(--space-xs);
 }
 
 .login-link a:hover {
   text-decoration: underline;
 }
 
-.error-text {
-  color: #e74c3c;
-  font-size: 13px;
-  margin-top: 4px;
-  text-align: left;
+/* Модальное окно */
+.modal-message {
+  padding: var(--space-lg) 0;
+  line-height: 1.6;
 }
 
-.success-text {
-  color: #27ae60;
-  font-size: 13px;
-  margin-top: 4px;
-  text-align: left;
+.document-content {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: var(--space-md);
+}
+
+.document-content h4 {
+  color: var(--dark-color);
+  margin-bottom: var(--space-md);
+}
+
+.document-content h5 {
+  color: var(--dark-color);
+  margin: var(--space-lg) 0 var(--space-md);
+}
+
+.document-content ul {
+  padding-left: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.document-content li {
+  margin-bottom: var(--space-sm);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Адаптивность */
+@media (max-width: 960px) {
+  .registration-form-wrapper {
+    padding: var(--space-xl);
+  }
+  
+  .info-card {
+    padding: var(--space-xl);
+  }
+  
+  .info-icon {
+    font-size: 3rem;
+  }
+  
+  .info-card h2 {
+    font-size: 1.8rem;
+  }
+  
+  .info-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .gender-options-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
 }
 
 @media (max-width: 768px) {
-  .registration-form {
-    max-width: 100%;
-    padding: 30px 20px;
+  .registration-page {
+    padding: var(--space-xl) 0;
+    min-height: calc(100vh - 70px - 200px);
+  }
+  
+  .registration-form-wrapper {
+    padding: var(--space-xl);
+  }
+  
+  .form-header h1 {
+    font-size: 1.8rem;
   }
   
   .form-row {
-    flex-direction: column;
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
   
-  .gender-options-container {
-    flex-direction: column;
-    gap: 10px;
+  .info-card h2 {
+    font-size: 1.5rem;
   }
   
-  .gender-card {
-    min-width: auto;
+  .agreements-section {
+    padding: var(--space-lg);
+  }
+  
+  .gender-option-card {
+    padding: var(--space-md);
   }
 }
 
 @media (max-width: 480px) {
-  .registration-form {
-    padding: 25px 15px;
+  .registration-form-wrapper {
+    padding: var(--space-lg);
   }
   
-  .gender-card-content {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 12px;
+  .form-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .agreements-section {
+    padding: var(--space-md);
+  }
+  
+  .form-checkbox label {
+    font-size: 0.85rem;
+  }
+  
+  .info-card {
+    padding: var(--space-lg);
+  }
+  
+  .info-description {
+    font-size: 1rem;
+  }
+  
+  .feature-content h4 {
+    font-size: 1.1rem;
+  }
+  
+  .feature-content p {
+    font-size: 0.9rem;
+  }
+  
+  .gender-icon {
+    font-size: 1.5rem;
+  }
+  
+  .gender-label {
+    font-size: 0.9rem;
   }
 }
