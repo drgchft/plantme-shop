@@ -131,6 +131,163 @@
   font-size: 0.9rem;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: var(--space-md);
+}
+
+.modal {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--gray-color);
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--dark-color);
+}
+
+.modal-content {
+  padding: var(--space-lg);
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.modal-footer {
+  padding: var(--space-lg);
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.errors-list {
+  color: var(--dark-color);
+}
+
+.errors-list ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.errors-list li {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid #eee;
+}
+
+.errors-list li:last-child {
+  border-bottom: none;
+}
+
+.errors-list strong {
+  color: var(--danger-color);
+}
+
+.document-content {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: var(--space-md);
+  background: #f9f9f9;
+  border-radius: var(--radius-md);
+}
+
+.gender-options {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-sm);
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  margin: 0;
+}
+
+.doc-link {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.doc-link:hover {
+  color: var(--secondary-color);
+}
+
+.form-actions {
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.login-link {
+  margin-top: var(--space-lg);
+  color: var(--gray-color);
+}
+
+.login-link a {
+  font-weight: 500;
+}
+
+input.error,
+select.error {
+  border-color: var(--danger-color) !important;
+}
+
+.error-message {
+  display: block;
+  color: var(--danger-color);
+  font-size: 0.9rem;
+  margin-top: var(--space-xs);
+}
+
 @media (max-width: 768px) {
   .mobile-menu-button {
     display: flex;
