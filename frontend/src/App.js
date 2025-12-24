@@ -1,5 +1,3 @@
-// App.js должен выглядеть так:
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
@@ -85,7 +83,6 @@ function App() {
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/card/:id" element={<Card />} />
             
-            {/* Создайте эти страницы позже */}
             <Route path="/privacy" element={<div>Политика конфиденциальности</div>} />
             <Route path="/offer" element={<div>Договор оферты</div>} />
             <Route path="/agreement" element={<div>Согласие на обработку данных</div>} />

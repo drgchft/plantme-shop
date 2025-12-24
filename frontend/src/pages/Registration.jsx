@@ -7,7 +7,6 @@ import '../styles/registration.css';
 const Registration = ({ onLogin }) => {
   const navigate = useNavigate();
   
-  // Состояние формы
   const [formData, setFormData] = useState({
     username: '',
     nickname: '',
@@ -32,7 +31,6 @@ const Registration = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Маска для телефона
   const applyPhoneMask = (value) => {
     const numbers = value.replace(/[^\d+]/g, '');
     
@@ -65,11 +63,9 @@ const Registration = ({ onLogin }) => {
     return formatted;
   };
 
-  // Обработчик изменения полей
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
-    // Обработка телефона с маской
     if (name === 'phone') {
       const maskedValue = applyPhoneMask(value);
       setFormData(prev => ({ ...prev, [name]: maskedValue }));
@@ -81,22 +77,18 @@ const Registration = ({ onLogin }) => {
       [name]: type === 'checkbox' ? checked : value
     }));
     
-    // Очистка ошибки
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
-  // Выбор пола
   const handleGenderSelect = (gender) => {
     setFormData(prev => ({ ...prev, gender }));
   };
 
-  // Валидация формы
   const validateForm = () => {
     const newErrors = {};
     
-    // Валидация логина
     if (!formData.username.trim()) {
       newErrors.username = 'Обязательное поле';
     } else if (formData.username.length < 3) {
@@ -105,62 +97,54 @@ const Registration = ({ onLogin }) => {
       newErrors.username = 'Только латиница, цифры и _';
     }
     
-    // Валидация никнейма
     if (!formData.nickname.trim()) {
       newErrors.nickname = 'Обязательное поле';
     } else if (formData.nickname.length > 50) {
       newErrors.nickname = 'Максимум 50 символов';
     }
     
-    // Валидация имени
     if (!formData.firstName.trim()) {
       newErrors.firstName = 'Обязательное поле';
     } else if (!/^[а-яА-ЯёЁ\s-]+$/.test(formData.firstName)) {
       newErrors.firstName = 'Только кириллица';
     }
     
-    // Валидация фамилии
     if (!formData.lastName.trim()) {
       newErrors.lastName = 'Обязательное поле';
     } else if (!/^[а-яА-ЯёЁ\s-]+$/.test(formData.lastName)) {
       newErrors.lastName = 'Только кириллица';
     }
     
-    // Валидация отчества
     if (formData.middleName && !/^[а-яА-ЯёЁ\s-]+$/.test(formData.middleName)) {
       newErrors.middleName = 'Только кириллица';
     }
     
-    // Валидация email
     if (!formData.email.trim()) {
       newErrors.email = 'Обязательное поле';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Неверный email адрес';
     }
     
-    // Валидация телефона
     const phoneDigits = formData.phone.replace(/\D/g, '');
     if (!formData.phone.trim()) {
       newErrors.phone = 'Обязательное поле';
     } else if (phoneDigits.length < 11) {
       newErrors.phone = 'Введите полный номер телефона';
     }
-    
-    // Валидация пароля
+
     if (!formData.password) {
       newErrors.password = 'Обязательное поле';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Минимум 6 символов';
     }
     
-    // Валидация подтверждения пароля
+
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Подтвердите пароль';
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Пароли не совпадают';
     }
     
-    // Валидация согласий
     if (!formData.agreePersonal) newErrors.agreePersonal = 'Необходимо согласие';
     if (!formData.agreeOffer) newErrors.agreeOffer = 'Необходимо согласие';
     if (!formData.agreePrivacy) newErrors.agreePrivacy = 'Необходимо согласие';
@@ -168,7 +152,6 @@ const Registration = ({ onLogin }) => {
     return newErrors;
   };
 
-  // Открыть документ
   const openDocument = (title) => {
     setModalTitle(title);
     setModalContent(`<div class="document-content">
@@ -192,7 +175,6 @@ const Registration = ({ onLogin }) => {
     setShowModal(true);
   };
 
-  // Отправить форму
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -206,7 +188,6 @@ const Registration = ({ onLogin }) => {
     setIsLoading(true);
     
     try {
-      // Подготовка данных для API
       const requestData = {
         username: formData.username,
         email: formData.email,
@@ -231,12 +212,10 @@ const Registration = ({ onLogin }) => {
       const data = await response.json();
       
       if (response.ok) {
-        // Регистрация успешна
         setModalTitle('Регистрация успешна!');
         setModalContent('Ваш аккаунт успешно создан. Теперь вы можете войти в систему.');
         setShowModal(true);
         
-        // Перенаправляем на страницу входа через 2 секунды
         setTimeout(() => {
           navigate('/login', { state: { registered: true } });
         }, 2000);
@@ -255,7 +234,6 @@ const Registration = ({ onLogin }) => {
     }
   };
 
-  // Варианты пола
   const genderOptions = [
     { value: 'M', label: 'Мужской', icon: '👨' },
     { value: 'F', label: 'Женский', icon: '👩' },
@@ -266,7 +244,6 @@ const Registration = ({ onLogin }) => {
     <div className="registration-page">
       <div className="container">
         
-        {/* Информационная панель (сверху) */}
         <div className="registration-info">
           <div className="info-card">
             <div className="info-icon">🌿</div>
@@ -300,8 +277,7 @@ const Registration = ({ onLogin }) => {
             </div>
           </div>
         </div>
-        
-        {/* Форма регистрации (широкая, по центру) */}
+
         <div className="registration-form-wrapper">
           <div className="form-header">
             <div className="form-icon">📝</div>
@@ -310,8 +286,7 @@ const Registration = ({ onLogin }) => {
           </div>
           
           <form onSubmit={handleSubmit} className="registration-form">
-            
-            {/* Логин и никнейм */}
+
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="username" className="label-required">
@@ -364,7 +339,6 @@ const Registration = ({ onLogin }) => {
               </div>
             </div>
             
-            {/* Имя и фамилия */}
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="firstName" className="label-required">
@@ -408,8 +382,7 @@ const Registration = ({ onLogin }) => {
                 )}
               </div>
             </div>
-            
-            {/* Отчество */}
+
             <div className="form-group">
               <label htmlFor="middleName">
                 Отчество
@@ -431,7 +404,6 @@ const Registration = ({ onLogin }) => {
               )}
             </div>
             
-            {/* Пол - улучшенный интерфейс выбора */}
             <div className="form-group">
               <label className="label-required">Пол</label>
               <div className="gender-options-grid">
@@ -455,7 +427,6 @@ const Registration = ({ onLogin }) => {
               </div>
             </div>
             
-            {/* Email и телефон */}
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="email" className="label-required">
@@ -507,7 +478,6 @@ const Registration = ({ onLogin }) => {
               </div>
             </div>
             
-            {/* Пароли - один под другим */}
             <div className="password-fields">
               <div className="form-group">
                 <label htmlFor="password" className="label-required">
@@ -576,7 +546,6 @@ const Registration = ({ onLogin }) => {
               </div>
             </div>
             
-            {/* Согласия */}
             <div className="agreements-section">
               <h3>Соглашения</h3>
               <div className={`form-checkbox ${errors.agreePersonal ? 'error' : ''}`}>
@@ -676,7 +645,6 @@ const Registration = ({ onLogin }) => {
         </div>
       </div>
       
-      {/* Модальное окно для документов */}
       <Modal 
         isOpen={showModal}
         onClose={() => setShowModal(false)}

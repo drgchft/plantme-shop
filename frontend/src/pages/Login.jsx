@@ -8,7 +8,6 @@ const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Состояние формы
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -22,12 +21,10 @@ const Login = ({ onLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
-  // Для восстановления пароля
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [resetSuccess, setResetSuccess] = useState(false);
 
-  // Проверяем, если нас перенаправили с регистрации
   React.useEffect(() => {
     if (location.state?.registered) {
       setModalTitle('Регистрация успешна!');
@@ -36,7 +33,6 @@ const Login = ({ onLogin }) => {
     }
   }, [location.state]);
 
-  // Обработчик изменения полей
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
@@ -45,13 +41,11 @@ const Login = ({ onLogin }) => {
       [name]: type === 'checkbox' ? checked : value
     }));
     
-    // Очистка ошибки
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
-  // Валидация формы входа
   const validateLoginForm = () => {
     const newErrors = {};
     
@@ -68,14 +62,12 @@ const Login = ({ onLogin }) => {
     return newErrors;
   };
 
-  // Валидация email для восстановления
   const validateEmail = (email) => {
     if (!email.trim()) return 'Введите email адрес';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Введите корректный email адрес';
     return '';
   };
 
-  // Отправить форму входа
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -89,7 +81,6 @@ const Login = ({ onLogin }) => {
     setIsLoading(true);
     
     try {
-      // Здесь будет реальный запрос к API
       const response = await fetch('http://localhost:8000/api/users/login/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -102,7 +93,6 @@ const Login = ({ onLogin }) => {
       const data = await response.json();
       
       if (response.ok) {
-        // Сохраняем данные
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
@@ -110,12 +100,10 @@ const Login = ({ onLogin }) => {
           localStorage.setItem('rememberMe', 'true');
         }
         
-        // Вызываем колбэк onLogin
         if (onLogin) {
           onLogin(data.user, data.token);
         }
-        
-        // Перенаправляем на главную или сохранённый путь
+
         const from = location.state?.from?.pathname || '/';
         navigate(from, { replace: true });
         
@@ -134,7 +122,6 @@ const Login = ({ onLogin }) => {
     }
   };
 
-  // Восстановление пароля
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     
@@ -149,7 +136,6 @@ const Login = ({ onLogin }) => {
     setIsLoading(true);
     
     try {
-      // Имитация отправки запроса
       const response = await fetch('http://localhost:8000/api/users/password-reset/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -179,7 +165,6 @@ const Login = ({ onLogin }) => {
     }
   };
 
-  // Вход через социальные сети
   const handleSocialLogin = (provider) => {
     setModalTitle('Вход через ' + provider);
     setModalContent(`Функция входа через ${provider} находится в разработке. Пожалуйста, используйте стандартную форму входа.`);
@@ -192,7 +177,6 @@ const Login = ({ onLogin }) => {
         <div className="login-container">
           
           {!showForgotPassword ? (
-            // Форма входа
             <div className="login-form-wrapper">
               <div className="form-header">
                 <div className="form-icon">🔑</div>
@@ -318,7 +302,6 @@ const Login = ({ onLogin }) => {
               </form>
             </div>
           ) : (
-            // Форма восстановления пароля
             <div className="forgot-password-form">
               <button
                 type="button"
@@ -409,7 +392,6 @@ const Login = ({ onLogin }) => {
         </div>
       </div>
       
-      {/* Модальное окно для сообщений */}
       <Modal 
         isOpen={showModal}
         onClose={() => setShowModal(false)}

@@ -13,7 +13,6 @@
   align-items: center;
 }
 
-/* Форма входа */
 .login-form-wrapper,
 .forgot-password-form {
   background: white;
@@ -58,7 +57,6 @@
   font-size: 1rem;
 }
 
-/* Форма */
 .login-form {
   animation: fadeIn 0.6s ease-out;
 }
@@ -169,7 +167,6 @@
   padding-left: var(--space-sm);
 }
 
-/* Опции формы */
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -222,7 +219,6 @@
   text-decoration: none;
 }
 
-/* Кнопка входа */
 .btn-login {
   width: 100%;
   padding: var(--space-lg);
@@ -268,7 +264,6 @@
   animation: spin 1s linear infinite;
 }
 
-/* Разделитель */
 .form-divider {
   display: flex;
   align-items: center;
@@ -291,7 +286,6 @@
   background: white;
 }
 
-/* Социальный вход */
 .social-login {
   display: flex;
   gap: var(--space-md);
@@ -340,7 +334,6 @@
   font-size: 1.1rem;
 }
 
-/* Ссылка на регистрацию */
 .register-link {
   text-align: center;
   color: var(--gray-color);
@@ -358,7 +351,6 @@
   text-decoration: underline;
 }
 
-/* Демо-подсказка */
 .demo-hint {
   margin-top: var(--space-xl);
   padding: var(--space-md);
@@ -394,7 +386,6 @@
   margin-right: var(--space-sm);
 }
 
-/* Форма восстановления пароля */
 .back-button {
   background: none;
   border: none;
@@ -453,7 +444,6 @@
   font-style: italic;
 }
 
-/* Информационная панель */
 .login-info {
   padding: var(--space-xl);
 }
@@ -505,13 +495,11 @@
   font-weight: bold;
 }
 
-/* Модальное окно */
 .modal-message {
   padding: var(--space-lg) 0;
   line-height: 1.6;
 }
 
-/* Анимации */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -527,7 +515,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Адаптивность */
 @media (max-width: 960px) {
   .login-container {
     grid-template-columns: 1fr;
