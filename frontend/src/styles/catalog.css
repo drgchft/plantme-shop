@@ -91,6 +91,7 @@
   opacity: 0.9;
   font-weight: 500;
   letter-spacing: 0.5px;
+  color: var(--light-color);
 }
 
 .catalog-layout {

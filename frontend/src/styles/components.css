@@ -324,65 +324,24 @@ select.error {
   }
 }
 
-.input-with-icon {
-  position: relative;
+.btn-light {
+  background: white;
+  color: var(--primary-color);
+  border: 2px solid white;
 }
 
-.input-icon {
-  position: absolute;
-  left: var(--space-lg);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--gray-color);
-  z-index: 1;
+.btn-light:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-dark);
 }
 
-.demo-hint {
-  background: #f0f8f4;
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  margin-top: var(--space-lg);
-  border-left: 4px solid var(--primary-color);
-}
-
-.demo-hint-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-  font-weight: 500;
-}
-
-.demo-credentials {
-  font-size: 0.9rem;
-}
-
-.success-message {
-  text-align: center;
-  padding: var(--space-xl);
-}
-
-.success-icon {
-  width: 60px;
-  height: 60px;
-  background: var(--success-color);
+.btn-outline-light {
+  background: transparent;
   color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  margin: 0 auto var(--space-lg);
+  border: 2px solid white;
 }
 
-@media (max-width: 480px) {
-  .form-options {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-md);
-  }
-  
-  .input-with-icon input {
-    padding-left: calc(var(--space-lg) * 1.5 + 20px);
-  }
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
