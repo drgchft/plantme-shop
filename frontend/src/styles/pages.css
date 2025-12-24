@@ -444,7 +444,6 @@
   padding-left: var(--space-sm);
 }
 
-/* Анимация формы */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -460,7 +459,6 @@
   animation: fadeIn 0.6s ease-out;
 }
 
-/* Адаптивность */
 @media (max-width: 960px) {
   .registration-container {
     grid-template-columns: 1fr;
@@ -504,7 +502,6 @@
   }
 }
 
-/* Стили для Main page */
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -544,7 +541,6 @@
   font-size: 4rem;
 }
 
-/* Features */
 .features {
   padding: var(--space-xxl) 0;
 }
@@ -578,7 +574,6 @@
   margin-bottom: var(--space-md);
 }
 
-/* Categories */
 .categories {
   padding: var(--space-xxl) 0;
 }

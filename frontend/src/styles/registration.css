@@ -236,7 +236,6 @@
   cursor: not-allowed;
 }
 
-/* Подсказки */
 .form-hint {
   color: var(--gray-color);
   font-size: 0.85rem;
