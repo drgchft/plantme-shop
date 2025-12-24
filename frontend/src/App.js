@@ -23,16 +23,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [user, setUser] = React.useState(null);
 
-  React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userData = localStorage.getItem('user');
-    
-    if (token && userData) {
-      setIsAuthenticated(true);
-      setUser(JSON.parse(userData));
-    }
-  }, []);
-
   const handleLogin = (userData, token) => {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
@@ -46,6 +36,40 @@ function App() {
     setIsAuthenticated(false);
     setUser(null);
   };
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    
+    if (token && userData) {
+      setIsAuthenticated(true);
+      setUser(JSON.parse(userData));
+    } else {
+      const testUser = {
+        id: 1,
+        username: 'plantlover',
+        fullName: 'Алексей Петров',
+        email: 'alexey@example.com',
+        phone: '+7 (999) 123-45-67',
+        address: 'г. Москва, ул. Зеленая, д. 15, кв. 42',
+        registrationDate: '15.03.2023',
+        status: 'premium',
+        about: 'Люблю комнатные растения. В моей коллекции уже более 50 видов. Особенно нравятся суккуленты и орхидеи.',
+        stats: {
+          plantsBought: 24,
+          reviews: 18,
+          wishlist: 32,
+          orders: 15
+        }
+      };
+      
+      // Раскомментируйте строку ниже для автоматического входа при разработке
+      handleLogin(testUser, 'test-jwt-token-12345');
+      
+      console.log('Для тестирования раскомментируйте строку handleLogin в useEffect');
+      console.log('Текущий статус авторизации:', isAuthenticated);
+    }
+  }, []);
 
   return (
     <Router>
@@ -76,7 +100,7 @@ function App() {
             } />
             <Route path="/profile" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                {user && <Navigate to={`/profile/${user.username}`} />}
+                {user ? <Navigate to={`/profile/${user.username}`} /> : <Navigate to="/login" />}
               </ProtectedRoute>
             } />
             <Route path="/about-us" element={<About />} />
