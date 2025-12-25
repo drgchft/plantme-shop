@@ -1324,3 +1324,35 @@
     display: none;
   }
 }
+
+.category-check {
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.plant-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.plant-card-link:hover .plant-name {
+  color: var(--primary-color);
+}
+
+.filter-category {
+  color: var(--primary-color);
+  font-weight: 600;
+  background: rgba(46, 139, 87, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  margin-left: var(--space-xs);
+}
+
+.add-to-cart {
+  width: 100%;
+  margin-top: var(--space-md);
+  justify-content: center;
+}

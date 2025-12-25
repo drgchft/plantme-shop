@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Filter, Search, ChevronDown, Star, ShoppingCart, Heart } from 'lucide-react';
 import '../styles/catalog.css';
 
@@ -17,6 +17,9 @@ const Catalog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [wishlist, setWishlist] = useState(new Set());
+  
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const categories = [
     { id: 'all', name: 'Все растения' },
@@ -243,9 +246,17 @@ const Catalog = () => {
     setTimeout(() => {
       setPlants(plantsData);
       setFilteredPlants(plantsData);
+      
+      const params = new URLSearchParams(location.search);
+      const categoryFromUrl = params.get('category');
+      
+      if (categoryFromUrl && categories.some(c => c.id === categoryFromUrl)) {
+        setFilters(prev => ({ ...prev, category: categoryFromUrl }));
+      }
+      
       setIsLoading(false);
     }, 500);
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     let result = [...plants];
@@ -297,6 +308,15 @@ const Catalog = () => {
 
   const handleCategoryChange = (categoryId) => {
     setFilters(prev => ({ ...prev, category: categoryId }));
+    
+    const params = new URLSearchParams(location.search);
+    if (categoryId === 'all') {
+      params.delete('category');
+    } else {
+      params.set('category', categoryId);
+    }
+    
+    navigate({ search: params.toString() });
   };
 
   const handlePriceChange = (min, max) => {
@@ -320,6 +340,8 @@ const Catalog = () => {
     });
     setSearchQuery('');
     setSortBy('popular');
+    
+    navigate({ search: '' });
   };
 
   const toggleWishlist = (plantId) => {
@@ -350,6 +372,46 @@ const Catalog = () => {
     return plant.price;
   };
 
+  const CategoryButton = ({ category }) => (
+    <button
+      className={`category-btn ${filters.category === category.id ? 'active' : ''}`}
+      onClick={() => handleCategoryChange(category.id)}
+    >
+      {category.icon && <span className="category-icon">{category.icon}</span>}
+      {category.name}
+      {filters.category === category.id && (
+        <span className="category-check">✓</span>
+      )}
+    </button>
+  );
+
+  const DifficultyButton = ({ difficulty }) => (
+    <button
+      key={difficulty.id}
+      className={`difficulty-btn ${filters.difficulty === difficulty.id ? 'active' : ''}`}
+      onClick={() => handleDifficultyChange(difficulty.id)}
+      data-difficulty={difficulty.id}
+      style={difficulty.color ? { 
+        '--difficulty-color': difficulty.color,
+        'border-color': filters.difficulty === difficulty.id ? difficulty.color : '#e8f0eb',
+        'color': filters.difficulty === difficulty.id ? difficulty.color : 'var(--dark-color)'
+      } : {}}
+    >
+      {difficulty.name}
+    </button>
+  );
+
+  const LightButton = ({ light }) => (
+    <button
+      key={light.id}
+      className={`light-btn ${filters.light === light.id ? 'active' : ''}`}
+      onClick={() => handleLightChange(light.id)}
+    >
+      {light.icon && <span className="light-icon">{light.icon}</span>}
+      {light.name}
+    </button>
+  );
+
   return (
     <div className="catalog-page">
       <section className="catalog-header">
@@ -361,18 +423,18 @@ const Catalog = () => {
               Найдите своего зеленого друга!
             </p>
             <div className="header-stats">
-                <div className="stat-item">
-                     <div className="stat-value">{plantsData.length}+</div>
-                     <div className="stat-label">Видов растений</div>
-                    </div>
-            <div className="stat-item">
+              <div className="stat-item">
+                <div className="stat-value">{plantsData.length}+</div>
+                <div className="stat-label">Видов растений</div>
+              </div>
+              <div className="stat-item">
                 <div className="stat-value">4.7</div>
                 <div className="stat-label">Средний рейтинг</div>
-            </div>
-            <div className="stat-item">
+              </div>
+              <div className="stat-item">
                 <div className="stat-value">30</div>
                 <div className="stat-label">Дней гарантии</div>
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -409,14 +471,7 @@ const Catalog = () => {
               <h4>Категории</h4>
               <div className="categories-list">
                 {categories.map(category => (
-                  <button
-                    key={category.id}
-                    className={`category-btn ${filters.category === category.id ? 'active' : ''}`}
-                    onClick={() => handleCategoryChange(category.id)}
-                  >
-                    {category.icon && <span className="category-icon">{category.icon}</span>}
-                    {category.name}
-                  </button>
+                  <CategoryButton key={category.id} category={category} />
                 ))}
               </div>
             </div>
@@ -457,42 +512,26 @@ const Catalog = () => {
                     onChange={(e) => handlePriceChange(filters.priceRange[0], Number(e.target.value))}
                   />
                 </div>
+                <div className="price-display">
+                  {filters.priceRange[0].toLocaleString('ru-RU')} ₽ — {filters.priceRange[1].toLocaleString('ru-RU')} ₽
+                </div>
               </div>
             </div>
 
             <div className="filter-section">
-                <h4>Сложность ухода</h4>
-                <div className="difficulty-list">
-                    {difficulties.map(diff => (
-                        <button
-                            key={diff.id}
-                            className={`difficulty-btn ${filters.difficulty === diff.id ? 'active' : ''}`}
-                            onClick={() => handleDifficultyChange(diff.id)}
-                            data-difficulty={diff.id}
-                            style={diff.color ? { 
-                                '--difficulty-color': diff.color,
-                                'border-color': filters.difficulty === diff.id ? diff.color : '#e8f0eb',
-                                'color': filters.difficulty === diff.id ? diff.color : 'var(--dark-color)'
-                            } : {}}
-                        >
-                            {diff.name}
-                        </button>
-                    ))}
-                </div>
+              <h4>Сложность ухода</h4>
+              <div className="difficulty-list">
+                {difficulties.map(difficulty => (
+                  <DifficultyButton key={difficulty.id} difficulty={difficulty} />
+                ))}
+              </div>
             </div>
 
             <div className="filter-section">
               <h4>Освещение</h4>
               <div className="light-list">
                 {lightRequirements.map(light => (
-                  <button
-                    key={light.id}
-                    className={`light-btn ${filters.light === light.id ? 'active' : ''}`}
-                    onClick={() => handleLightChange(light.id)}
-                  >
-                    {light.icon && <span className="light-icon">{light.icon}</span>}
-                    {light.name}
-                  </button>
+                  <LightButton key={light.id} light={light} />
                 ))}
               </div>
             </div>
@@ -514,6 +553,11 @@ const Catalog = () => {
               
               <div className="results-info">
                 Найдено растений: <span className="count">{filteredPlants.length}</span>
+                {filters.category !== 'all' && (
+                  <span className="filter-category">
+                    в категории "{categories.find(c => c.id === filters.category)?.name}"
+                  </span>
+                )}
                 {searchQuery && (
                   <span className="search-query"> по запросу "{searchQuery}"</span>
                 )}
@@ -522,19 +566,19 @@ const Catalog = () => {
               <div className="sort-controls">
                 <span className="sort-label">Сортировка:</span>
                 <div className="sort-select-wrapper">
-                    <select 
+                  <select 
                     className="sort-select"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    >
+                  >
                     <option value="popular">По популярности</option>
                     <option value="rating">По рейтингу</option>
                     <option value="price-low">Сначала дешевые</option>
                     <option value="price-high">Сначала дорогие</option>
                     <option value="new">Новинки</option>
-                    </select>
+                  </select>
                 </div>
-                </div>
+              </div>
             </div>
 
             {isLoading ? (
@@ -547,6 +591,7 @@ const Catalog = () => {
                 {filteredPlants.map(plant => {
                   const discountedPrice = calculateDiscountedPrice(plant);
                   const isInWishlist = wishlist.has(plant.id);
+                  const categoryInfo = categories.find(c => c.id === plant.category);
                   
                   return (
                     <div key={plant.id} className="plant-card">
@@ -569,89 +614,91 @@ const Catalog = () => {
                         <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} />
                       </button>
                       
-                      <div className="plant-image">
-                        <div className="image-placeholder">
-                          {plant.image}
-                        </div>
-                      </div>
-                      
-                      <div className="plant-info">
-                        <div className="plant-category">
-                          {categories.find(c => c.id === plant.category)?.icon} 
-                          {categories.find(c => c.id === plant.category)?.name}
-                        </div>
-                        
-                        <h3 className="plant-name">{plant.name}</h3>
-                        <p className="plant-latin">{plant.latinName}</p>
-                        
-                        <div className="plant-rating">
-                          <div className="stars">
-                            {[...Array(5)].map((_, i) => (
-                              <Star 
-                                key={i} 
-                                size={14} 
-                                fill={i < Math.floor(plant.rating) ? "#FFC107" : "#E0E0E0"}
-                              />
-                            ))}
+                      <Link to={`/card/${plant.id}`} className="plant-card-link">
+                        <div className="plant-image">
+                          <div className="image-placeholder">
+                            {plant.image}
                           </div>
-                          <span className="rating-value">{plant.rating.toFixed(1)}</span>
-                          <span className="reviews-count">({plant.reviews})</span>
                         </div>
                         
-                        <p className="plant-description">{plant.description}</p>
-                        
-                        <div className="plant-details">
-                          <span className="detail">
-                            <span className="detail-label">Сложность:</span>
-                            <span 
-                              className="detail-value difficulty"
-                              style={{ 
-                                color: difficulties.find(d => d.id === plant.difficulty)?.color 
-                              }}
-                            >
-                              {difficulties.find(d => d.id === plant.difficulty)?.name}
-                            </span>
-                          </span>
-                          <span className="detail">
-                            <span className="detail-label">Освещение:</span>
-                            <span className="detail-value">
-                              {lightRequirements.find(l => l.id === plant.light)?.name}
-                            </span>
-                          </span>
-                        </div>
-                        
-                        <div className="plant-footer">
-                          <div className="plant-pricing">
-                            {plant.discount > 0 ? (
-                              <>
-                                <span className="price-old">{formatPrice(plant.price)}</span>
-                                <span className="price-current">
-                                  {formatPrice(discountedPrice)}
-                                </span>
-                              </>
-                            ) : (
-                              <span className="price-current">
-                                {formatPrice(plant.price)}
-                              </span>
-                            )}
+                        <div className="plant-info">
+                          <div className="plant-category">
+                            {categoryInfo?.icon} 
+                            {categoryInfo?.name}
                           </div>
                           
-                          <button 
-                            className={`btn btn-primary add-to-cart ${!plant.inStock ? 'disabled' : ''}`}
-                            onClick={() => plant.inStock && addToCart(plant)}
-                            disabled={!plant.inStock}
-                          >
-                            {plant.inStock ? (
-                              <>
-                                <ShoppingCart size={18} />
-                                В корзину
-                              </>
-                            ) : (
-                              'Нет в наличии'
-                            )}
-                          </button>
+                          <h3 className="plant-name">{plant.name}</h3>
+                          <p className="plant-latin">{plant.latinName}</p>
+                          
+                          <div className="plant-rating">
+                            <div className="stars">
+                              {[...Array(5)].map((_, i) => (
+                                <Star 
+                                  key={i} 
+                                  size={14} 
+                                  fill={i < Math.floor(plant.rating) ? "#FFC107" : "#E0E0E0"}
+                                />
+                              ))}
+                            </div>
+                            <span className="rating-value">{plant.rating.toFixed(1)}</span>
+                            <span className="reviews-count">({plant.reviews})</span>
+                          </div>
+                          
+                          <p className="plant-description">{plant.description}</p>
+                          
+                          <div className="plant-details">
+                            <span className="detail">
+                              <span className="detail-label">Сложность:</span>
+                              <span 
+                                className="detail-value difficulty"
+                                style={{ 
+                                  color: difficulties.find(d => d.id === plant.difficulty)?.color 
+                                }}
+                              >
+                                {difficulties.find(d => d.id === plant.difficulty)?.name}
+                              </span>
+                            </span>
+                            <span className="detail">
+                              <span className="detail-label">Освещение:</span>
+                              <span className="detail-value">
+                                {lightRequirements.find(l => l.id === plant.light)?.name}
+                              </span>
+                            </span>
+                          </div>
+                          
+                          <div className="plant-footer">
+                            <div className="plant-pricing">
+                              {plant.discount > 0 ? (
+                                <>
+                                  <span className="price-old">{formatPrice(plant.price)}</span>
+                                  <span className="price-current">
+                                    {formatPrice(discountedPrice)}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="price-current">
+                                  {formatPrice(plant.price)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
+                      
+                      <button 
+                        className={`btn btn-primary add-to-cart ${!plant.inStock ? 'disabled' : ''}`}
+                        onClick={() => plant.inStock && addToCart(plant)}
+                        disabled={!plant.inStock}
+                      >
+                        {plant.inStock ? (
+                          <>
+                            <ShoppingCart size={18} />
+                            В корзину
+                          </>
+                        ) : (
+                          'Нет в наличии'
+                        )}
+                      </button>
                     </div>
                   );
                 })}
