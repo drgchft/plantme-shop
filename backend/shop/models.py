@@ -1,7 +1,6 @@
 from django.db import models
 
 class Category(models.Model):
-    """Категория растений"""
     name = models.CharField('Название', max_length=100)
     slug = models.SlugField('URL', max_length=100, unique=True)
     description = models.TextField('Описание', blank=True)
@@ -17,7 +16,6 @@ class Category(models.Model):
 
 
 class Plant(models.Model):
-    """Модель растения"""
     
     DIFFICULTY_CHOICES = [
         ('easy', 'Легкий'),
@@ -68,12 +66,10 @@ class Plant(models.Model):
     
     @property
     def current_price(self):
-        """Возвращает текущую цену (со скидкой если есть)"""
         return self.discount_price if self.discount_price else self.price
     
     @property
     def discount_percent(self):
-        """Рассчитывает процент скидки"""
         if self.discount_price and self.price:
             return int((1 - self.discount_price / self.price) * 100)
         return 0

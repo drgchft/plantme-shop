@@ -7,7 +7,6 @@ from .models import Category, Plant
 from .serializers import CategorySerializer, PlantListSerializer, PlantDetailSerializer
 
 class CategoryListView(generics.ListCreateAPIView):
-    """Список категорий и создание новой"""
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -18,7 +17,6 @@ class CategoryListView(generics.ListCreateAPIView):
         return super().get_permissions()
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """Детальный просмотр, обновление и удаление категории"""
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -30,7 +28,6 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
         return super().get_permissions()
 
 class PlantListView(generics.ListCreateAPIView):
-    """Список растений с фильтрацией, сортировкой и пагинацией"""
     serializer_class = PlantListSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -69,7 +66,6 @@ class PlantListView(generics.ListCreateAPIView):
         })
 
 class PlantDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """Детальный просмотр, обновление и удаление растения"""
     queryset = Plant.objects.all()
     serializer_class = PlantDetailSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -81,7 +77,6 @@ class PlantDetailView(generics.RetrieveUpdateDestroyAPIView):
         return super().get_permissions()
 
 class PlantSearchView(generics.ListAPIView):
-    """Поиск растений"""
     serializer_class = PlantListSerializer
     permission_classes = [permissions.AllowAny]
     
@@ -98,7 +93,6 @@ class PlantSearchView(generics.ListAPIView):
         return Plant.objects.none()
 
 class FeaturedPlantsView(generics.ListAPIView):
-    """Рекомендуемые растения"""
     serializer_class = PlantListSerializer
     permission_classes = [permissions.AllowAny]
     
@@ -106,7 +100,6 @@ class FeaturedPlantsView(generics.ListAPIView):
         return Plant.objects.filter(is_featured=True, in_stock=True)[:8]
 
 class NewPlantsView(generics.ListAPIView):
-    """Новинки"""
     serializer_class = PlantListSerializer
     permission_classes = [permissions.AllowAny]
     

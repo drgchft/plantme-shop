@@ -10,7 +10,6 @@ class CategorySerializer(serializers.ModelSerializer):
         read_only_fields = ['slug']
 
 class PlantListSerializer(serializers.ModelSerializer):
-    """Сериализатор для списка растений"""
     category = CategorySerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
@@ -30,7 +29,6 @@ class PlantListSerializer(serializers.ModelSerializer):
         read_only_fields = ['slug', 'rating', 'created_at']
 
 class PlantDetailSerializer(serializers.ModelSerializer):
-    """Сериализатор для детального просмотра растения"""
     category = CategorySerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
